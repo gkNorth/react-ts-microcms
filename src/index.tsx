@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components'
+import { reset } from "styled-reset";
 import { App } from './App';
-import { Contact } from './components/Contact';
-import { List } from './components/List';
-import { Post } from './components/Post';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  * {
+    box-sizing: border-box;
+  }
+  h1, h2, h3, h4, h5, h6 p, a, div, span {
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+`
+
 root.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App />
   </React.StrictMode>
 );

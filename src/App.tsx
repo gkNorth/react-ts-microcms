@@ -1,22 +1,27 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import { Contact } from './components/Contact';
-import { List } from './components/List';
-import { Post } from './components/Post';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { About } from 'components/pages/About';
+import { Contact } from 'components/pages/Contact';
+import { Header } from 'components/common/Header';
+import { Footer } from 'components/common/Footer';
+import { BackToPrevious } from 'components/parts/BackToPrevious'
+import { List } from 'components/pages/List';
+import { Post } from 'components/pages/Post';
 
 export const App = () => {
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={`/contact`} element={<Contact />} />
-        <Route path={`/:postId`} element={<Post />} />
-        <Route path={`/`} element={<List />}>
-        </Route>
-      </Routes>
-      <div>
-        <Link to='/'>Back To Top</Link>
-      </div>
-    </BrowserRouter>
+    <div className='App'>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path={`/about`} element={<About />} />
+          <Route path={`/contact`} element={<Contact />} />
+          <Route path={`/:postId`} element={<Post />} />
+          <Route path={`/`} element={<List />} />
+        </Routes>
+        <BackToPrevious />
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
