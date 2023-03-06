@@ -5,6 +5,12 @@ import { useAtom } from "jotai";
 import { articleList, currentPageAtom } from "components/Atom"
 import { GetQueryParameters } from 'libs/GetQueryParameters'
 
+type Pager = {
+  index: number
+  num: number
+  currentPage: boolean
+}
+
 export const Pagination: FC = () => {
 
   const [ allContents ] = useAtom(articleList)
@@ -22,7 +28,7 @@ export const Pagination: FC = () => {
     setCurrentPage(paramByList / 10 + 1)
   }, [location, paramByList, setCurrentPage])
 
-  const pagers = [...Array(pagesCount)].map( (_,i) => {
+  const pagers: Pager[] = [...Array(pagesCount)].map( (_,i) => {
     return {
       index: i,
       num: i+1,
