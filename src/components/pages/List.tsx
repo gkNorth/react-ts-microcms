@@ -6,27 +6,27 @@ import { articleList } from "components/Atom"
 import dayjs from 'dayjs';
 import { Pagination } from 'components/parts/Pagination';
 import { GetQueryParameters } from 'libs/GetQueryParameters'
+import { Blog } from 'types'
 
 export const List = () => {
   const [ allContents ] = useAtom(articleList)
-  const [ list, setList ] = useState(allContents.contents)
+  const [ list, setList ] = useState<Blog[]>(allContents.contents)
 
   const location = useLocation();
   useEffect(() => {
     const offset: number = location.search ? Number(GetQueryParameters('list',location.search)) : 0
     setList(allContents.contents.slice(offset, offset + 10))
     window.scrollTo(0, 0)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  }, [location.search, allContents.contents]);
 
   if (!list) return null;
 
   return (
     <CardListWrapper className="list">
       <CardList>
-        {list.map((post: any) => {
+        {list.map((post: Blog) => {
           const imgSrc: string = post.blogEyecatch ? post.blogEyecatch.url : `${process.env.PUBLIC_URL}/noimage.jpg`
-          const publisedAt = dayjs(post.publishedAt).format('YYYY-MM-DD')
+          const publisedAt: string = dayjs(post.publishedAt).format('YYYY-MM-DD')
           return (
             <Card key={post.id}>
               <CardLink to={`/${post.id}`}>
@@ -52,7 +52,7 @@ const CardListWrapper = styled.div`
 const CardList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 10px;
   @media (max-width: 570px) {
     display: block;

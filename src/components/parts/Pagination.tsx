@@ -1,21 +1,35 @@
+import { FC, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useAtom } from "jotai";
-import { articleList } from "components/Atom"
+import { articleList, currentPageAtom } from "components/Atom"
 import { GetQueryParameters } from 'libs/GetQueryParameters'
 
-export const Pagination = () => {
+export const Pagination: FC = () => {
 
   const [ allContents ] = useAtom(articleList)
   const { totalCount } = allContents
-  const limit = 10
-  const pagesCount = Math.ceil(totalCount / limit)
+  const limit: number = 10
+  const pagesCount: number = Math.ceil(totalCount / limit)
 
   const location = useLocation();
   const paramByList: number = location.search ? Number(GetQueryParameters('list',location.search)) : 0
-  const beforeOffset = paramByList > 0 ? paramByList : null
-  const afterOffset = paramByList + 10 < totalCount ? paramByList : null
+  const beforeOffset: number | null = paramByList > 0 ? paramByList : null
+  const afterOffset: number | null = paramByList + 10 < totalCount ? paramByList : null
+  
+  const [ currentPage, setCurrentPage ] = useAtom(currentPageAtom)
+  useEffect(() => {
+    setCurrentPage(paramByList / 10 + 1)
+  }, [location, paramByList, setCurrentPage])
 
+  const pagers = [...Array(pagesCount)].map( (_,i) => {
+    return {
+      index: i,
+      num: i+1,
+      currentPage: currentPage === i+1
+    }
+  })
+  
   return (
     <PaginationWrapper>
       {
@@ -28,8 +42,10 @@ export const Pagination = () => {
           </PrevStringLink>
         )
       }
-      {[...Array(pagesCount)].map( (_,i) => (
-        <NumberLink to={i === 0 ? "/" : `/?list=${i*10}`} key={i+1}>{i+1}</NumberLink>
+      {pagers.map( pager => (
+        pager.currentPage ?
+          <CurrentPage key={pager.num}>{pager.num}</CurrentPage> :
+          <NumberLink to={pager.index === 0 ? "/" : `/?list=${pager.index*10}`} key={pager.num}>{pager.num}</NumberLink>
       ))}
       {
         afterOffset !== null && (
@@ -55,6 +71,16 @@ const NumberLink = styled(Link)`
   border-radius: 3px;
   display: inline-block;
   color: #fff;
+  padding: 10px;
+  margin-right: 8px;
+  text-decoration: none;
+`
+const CurrentPage = styled.span`
+  background: #f9f9f9;
+  border: 1px solid #4f55c1;
+  border-radius: 3px;
+  display: inline-block;
+  color: #4f55c1;
   padding: 10px;
   margin-right: 8px;
   text-decoration: none;

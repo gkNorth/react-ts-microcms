@@ -3,16 +3,19 @@ import { useAtom } from "jotai";
 import { articleList } from "components/Atom"
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { Blog } from 'types';
+import { NotFound } from 'components/pages/NotFound';
+
 
 export const Post = () => {
   const params = useParams();
   const [ allContents ] = useAtom(articleList)
-  const list = allContents.contents
+  const list: Blog[] = allContents.contents
 
-  const filteredPost = list.find((post:any) => post.id === params.postId)
+  const filteredPost: Blog | undefined  = list.find((post:any) => post.id === params.postId)
+  if (!filteredPost) {return <NotFound />}
 
   const imgSrc: string | null = filteredPost.blogEyecatch ? filteredPost.blogEyecatch.url : null
-
   const publisedAt = dayjs(filteredPost.publishedAt).format('YYYY-MM-DD')
 
   return (

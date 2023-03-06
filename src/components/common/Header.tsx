@@ -25,7 +25,7 @@ const Nav = styled.nav`
   background: #4f55c1;
   display: flex;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 16px 8px;
 `
 const Ul = styled.ul`
   display: flex;

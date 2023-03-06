@@ -1,13 +1,16 @@
+import { FC } from 'react';
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom';
 
-export const BackToPrevious = () => {
+export const BackToPrevious: FC = () => {
 
   const location = useLocation()
-  const isListPage = location.pathname === '/'
+  const isListPage: boolean = location.pathname === '/'
 
   return isListPage ? null : (
-    <StyledBackToTop  onClick={() => window.history.back()}>Back to Previous page</StyledBackToTop>
+    <StyledBackToTop  onClick={() => window.history.back()}>
+      Back to Previous page
+    </StyledBackToTop>
   )
 }
 
