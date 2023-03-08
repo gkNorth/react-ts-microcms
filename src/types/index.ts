@@ -1,8 +1,9 @@
 export type Blog = {
   blogAuthor: blogAuthor
+  blogAuthorImg?: blogAuthorImg
   blogBody: string
   blogCategory: blogCategory
-  blogEyecatch: BlogEyecatch | null
+  blogEyecatch?: BlogEyecatch | null
   blogTitle: string
   createdAt: string
   id: string
@@ -17,10 +18,16 @@ type blogAuthor = {
   id: string
   nickname: string
   profile: string
-  profile_img: ProfileImg
+  profile_img?: ProfileImg
   publishedAt: string
   revisedAt: string
   updatedAt: string
+}
+
+type blogAuthorImg = {
+  url: string
+  height: number 
+  width: number
 }
 
 type ProfileImg = {

@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Link, useLocation } from 'react-router-dom';
-import { useAtom } from "jotai";
+import { Link, useLocation } from 'react-router-dom'
+import { useAtom } from "jotai"
 import { articleList } from "components/Atom"
-import dayjs from 'dayjs';
-import { Pagination } from 'components/parts/Pagination';
+import dayjs from 'dayjs'
+import { Pagination } from 'components/parts/Pagination'
 import { GetQueryParameters } from 'libs/GetQueryParameters'
 import { Blog } from 'types'
 
@@ -12,14 +12,14 @@ export const List = () => {
   const [ allContents ] = useAtom(articleList)
   const [ list, setList ] = useState<Blog[]>(allContents.contents)
 
-  const location = useLocation();
+  const location = useLocation()
   useEffect(() => {
     const offset: number = location.search ? Number(GetQueryParameters('list',location.search)) : 0
     setList(allContents.contents.slice(offset, offset + 10))
     window.scrollTo(0, 0)
-  }, [location.search, allContents.contents]);
+  }, [location.search, allContents.contents])
 
-  if (!list) return null;
+  if (!list) return null
 
   return (
     <CardListWrapper className="list">
@@ -43,7 +43,7 @@ export const List = () => {
       </CardList>
       <Pagination />
     </CardListWrapper>
-  );
+  )
 }
 
 const CardListWrapper = styled.div`

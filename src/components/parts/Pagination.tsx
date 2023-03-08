@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react';
-import { Link, useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { useAtom } from "jotai";
+import { FC, useEffect } from 'react'
+import { Link, useLocation } from "react-router-dom"
+import styled from "styled-components"
+import { useAtom } from "jotai"
 import { articleList, currentPageAtom } from "components/Atom"
 import { GetQueryParameters } from 'libs/GetQueryParameters'
 
@@ -18,7 +18,7 @@ export const Pagination: FC = () => {
   const limit: number = 10
   const pagesCount: number = Math.ceil(totalCount / limit)
 
-  const location = useLocation();
+  const location = useLocation()
   const paramByList: number = location.search ? Number(GetQueryParameters('list',location.search)) : 0
   const beforeOffset: number | null = paramByList > 0 ? paramByList : null
   const afterOffset: number | null = paramByList + 10 < totalCount ? paramByList : null
@@ -63,7 +63,7 @@ export const Pagination: FC = () => {
         )
       }
     </PaginationWrapper>
-  );
+  )
 }
 
 const PaginationWrapper = styled.div`
